@@ -1,10 +1,12 @@
 import { Telegraf } from 'telegraf';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const telegram_token = '7148609687:AAH86dzb8dX0Z7Xm4UlHybccncLo2cmIUm0';
+const telegram_token = process.env.TELEGRAM_TOKEN;
 const bot = new Telegraf(telegram_token);
-const orderRecievedUrl = "https://lehre.bpm.in.tum.de/ports/5858/engine/orderRecieved";
-const cpeeEngineUrl = "https-get://cpee.org/ing/correlators/message/receive/";
+// const orderRecievedUrl = "https://lehre.bpm.in.tum.de/ports/5858/engine/orderRecieved";
+const orderRecievedUrl = `http://localhost:${process.env.PORT}/engine/orderRecieved`;
 
 /**
  * Greeting & list the menu in the start.
