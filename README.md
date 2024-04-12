@@ -58,10 +58,13 @@ npm run dev
 ## Key Files & Methods
 #### `server/routes/engine.js`: 
 Contains the very important 2 endpoints of the project: **applyRule** & **orderRecieved** and some additional usefull methods called inside them. 
-- **applyRule:** Recieves the entered rule from the CPEE engine, checks wheter any matching order is currently available in the orders queue. If not, it stores the recieved rule and the cpee_callback url into the rules queue. If a matching order is available already, it pops (deletes) the order from the order queue, creates a new matched order object & store it into the database.
-- **orderRecieved:** Recives the order entered from the Telegram bot, checks whether any mantching rule is currently available. If not, it stores the recieved order into the orders queue. If a matching rule is available already, it pops (deletes) the order from the order queue, creates a new matched order object & store it into the database, and notifies the cpee engine which is waiting for the async call by using the cpee_callback url.
+- **applyRule:** Recieves the entered rule from the CPEE engine, checks wheter any matching order is currently available in the orders queue. Matching is done by comparing the `drink_name`. If not, it stores the recieved rule and the cpee_callback url into the rules queue. If a matching order is available already, it pops (deletes) the order from the order queue, creates a new matched order object & store it into the database.
+- **orderRecieved:** Recives the order entered from the Telegram bot, checks whether any mantching rule is currently available. Matching is done by comparing the `drink_name`. If not, it stores the recieved order into the orders queue. If a matching rule is available already, it pops (deletes) the order from the order queue, creates a new matched order object & store it into the database, and notifies the cpee engine which is waiting for the async call by using the cpee_callback url.
 #### `server/routes/bot.js`: 
-Contains the necessary methods to have a functional Telegram Bot which fetches the desired drink name added after a `/order` message. For example: `/order Vodka`. The bot uses the `/engine/orderRecieved` endpoint of the server.
+Contains the necessary methods to have a functional Telegram Bot which fetches the desired `drink_name` added after a `/order` message. For example: `/order Vodka` will store `Vodka` as the `drink_name`. The bot uses the `/engine/orderRecieved` endpoint of the server.
+#### CPEE Engine Structure
+Example engine: https://cpee.org/flow/?monitor=https://cpee.org/flow/engine/36973/
+<img width="1512" alt="cpee-ss" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/df947a0d-8e04-4f66-b056-80a97d1ab7be">
 
 ## Correlator Services with Explained Cases
 We have 4 possible cases with different services called & different outcomes occur. We can list these as:
@@ -73,20 +76,59 @@ We have 4 possible cases with different services called & different outcomes occ
 #### Case 1: 
 New rule inserted with no matching order yet.
 
-![cocktailbot-rule-no-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/f37268f3-9d91-4bd9-b97e-c632cf54915d)
+<img width="500" alt="case-1" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/f37268f3-9d91-4bd9-b97e-c632cf54915d">
 
 #### Case 2: 
 New rule inserted with matching order available in the orders queue.
 
-![cocktailbot-rule-with-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/c5c9a71c-b1f5-4364-8b90-1a494001fa51)
+<img width="500" alt="case-2" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/c5c9a71c-b1f5-4364-8b90-1a494001fa51">
 
 #### Case 3: 
 New order recieved with no matching rule yet.
 
-![cocktailbot-order-no-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/d5e66dcc-bfb6-4a0c-b8c8-1e30714e193e)
+<img width="500" alt="case-3" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/d5e66dcc-bfb6-4a0c-b8c8-1e30714e193e">
 
 #### Case 4:
 New order recieved with matching rule available in the rules queue.
 
-![cocktailbot-order-with-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/afc21064-c5ab-4587-a6e6-01a3877a4332)
+<img width="500" alt="case-4" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/afc21064-c5ab-4587-a6e6-01a3877a4332">
+
+## Example
+- Open https://cpee.org/flow/?monitor=https://cpee.org/flow/engine/36973/
+- Enter Moscow Mule in the field `drink_name`.
+  
+  <img width="500" alt="Screenshot 2024-04-13 at 01 11 00" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/a5fa0fc2-5566-4b2e-94bf-7ca6d3eec4b9">
+- Start the engine.
+  
+  <img width="500" alt="Screenshot 2024-04-13 at 01 14 04" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/e220d9bc-9d83-472e-9ded-9c7228d03c0a">
+- The rule has no matching orders. It will be added to the rules queue.
+
+  <img width="500" alt="Screenshot 2024-04-12 at 20 07 51" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/635cd219-ef75-4873-91c7-3394b361eee5">
+- The engine will have a red color indicating it's waiting an asychronous callback.
+
+  <img width="500" alt="Screenshot 2024-04-12 at 20 07 12" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/97f884e3-bdc3-4684-98f2-563790018455">
+- Open CocktailRobotBPM Telegram Bot ([@bpm_cocktail_bot](https://t.me/bpm_cocktail_bot)). Order a Moscow Mule by typing `/order Moscow Mule`.
+
+  <img width="500" alt="Screenshot 2024-04-12 at 20 09 56" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/869140fc-5a6d-46bf-82c6-e1f6a976609e">
+- The matched Moscow Mule rule will be found, deleted from the queue and a new Matched Order object will be created in the database.
+
+  <img width="500" alt="Screenshot 2024-04-12 at 20 09 56" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/a42a9d3e-e04a-4179-93ea-bca81b380dbb">
+- The CPEE Engine will be notified with the `callback_url` and the engine will be normal again.
+
+  <img width="1512" alt="cpee-ss" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/042b49b2-f37f-4b59-a862-6fc90799e0cb">
+
+
+
+
+
+
+
+## Bonuses
+- Postman config file: https://github.com/abcdrk/inter-message-correlation/blob/main/Cocktailbot.postman_collection.json
+- There's also a React Web Application provided (https://github.com/abcdrk/inter-message-correlation/tree/main/client) for better visualization of rules queue, orders queue and the matched orders queue.
+
+## Further Implementations
+- A time comparaotr could be added.
+- A telegram notification message when the process is completed.
+
 
