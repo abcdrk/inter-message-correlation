@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "a0257d3d-6e5e-4181-a5be-71a559b3f187",
+		"name": "Cocktailbot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6418037"
+	},
+	"item": [
+		{
+			"name": "Engine",
+			"item": [
+				{
+					"name": "applyRule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "CPEE-CALLBACK",
+								"value": "www.deneme.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"drink_name\" : \"Water\",\n    \"ingredients\" : \"Only water\",\n    \"end_time\": \"2024-10-18\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://lehre.bpm.in.tum.de/ports/5858/engine/applyRule",
+							"protocol": "https",
+							"host": [
+								"lehre",
+								"bpm",
+								"in",
+								"tum",
+								"de"
+							],
+							"path": [
+								"ports",
+								"5858",
+								"engine",
+								"applyRule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "orderRecieved",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"770d6929d93aff12554fe97f\",\n    \"drink_name\": \"Fanta\",\n    \"customer_name\": \"Sünduz\",\n    \"order_time\": \"2024-04-18\",\n    \"update_info\": {\n        \"update_id\": 123205333,\n        \"message\": {\n          \"message_id\": 379,\n          \"from\": {\n            \"id\": 1364128379,\n            \"is_bot\": false,\n            \"first_name\": \"Sünduz\",\n            \"username\": \"sss\",\n            \"language_code\": \"en\"\n          },\n          \"chat\": {\n            \"id\": 1364128379,\n            \"first_name\": \"Sünduz\",\n            \"username\": \"sss\",\n            \"type\": \"private\"\n          },\n          \"date\": 1712153949,\n          \"text\": \"/order Portakal\",\n          \"entities\": [ {} ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://lehre.bpm.in.tum.de/ports/5858/engine/orderRecieved",
+							"protocol": "https",
+							"host": [
+								"lehre",
+								"bpm",
+								"in",
+								"tum",
+								"de"
+							],
+							"path": [
+								"ports",
+								"5858",
+								"engine",
+								"orderRecieved"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rules Lehre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lehre.bpm.in.tum.de/ports/5858/rule",
+							"protocol": "https",
+							"host": [
+								"lehre",
+								"bpm",
+								"in",
+								"tum",
+								"de"
+							],
+							"path": [
+								"ports",
+								"5858",
+								"rule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders Lehre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://lehre.bpm.in.tum.de/ports/5858/order",
+							"protocol": "https",
+							"host": [
+								"lehre",
+								"bpm",
+								"in",
+								"tum",
+								"de"
+							],
+							"path": [
+								"ports",
+								"5858",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
