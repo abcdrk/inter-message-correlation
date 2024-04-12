@@ -63,5 +63,30 @@ Contains the very important 2 endpoints of the project: **applyRule** & **orderR
 #### `server/routes/bot.js`: 
 Contains the necessary methods to have a functional Telegram Bot which fetches the desired drink name added after a `/order` message. For example: `/order Vodka`. The bot uses the `/engine/orderRecieved` endpoint of the server.
 
-## Correlators
+## Correlator Services with Explained Cases
+We have 4 possible cases with different services called & different outcomes occur. We can list these as:
+- **Case 1:** New rule inserted with no matching order yet.
+- **Case 2:** New rule inserted with matching order available in the orders queue.
+- **Case 3:** New order recieved with no matching rule yet.
+- **Case 4:** New order recieved with matching rule available in the rules queue.
+
+#### Case 1: 
+New rule inserted with no matching order yet.
+
+![cocktailbot-rule-no-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/f37268f3-9d91-4bd9-b97e-c632cf54915d)
+
+#### Case 2: 
+New rule inserted with matching order available in the orders queue.
+
+![cocktailbot-rule-with-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/c5c9a71c-b1f5-4364-8b90-1a494001fa51)
+
+#### Case 3: 
+New order recieved with no matching rule yet.
+
+![cocktailbot-order-no-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/d5e66dcc-bfb6-4a0c-b8c8-1e30714e193e)
+
+#### Case 4:
+New order recieved with matching rule available in the rules queue.
+
+![cocktailbot-order-with-match](https://github.com/abcdrk/inter-message-correlation/assets/19238061/afc21064-c5ab-4587-a6e6-01a3877a4332)
 
