@@ -117,13 +117,44 @@ New order recieved with matching rule available in the rules queue.
 
   <img width="1512" alt="cpee-ss" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/042b49b2-f37f-4b59-a862-6fc90799e0cb">
 
+## Endpoints
+- `POST` **/engine/applyRule**
+  - Request Parameters:
+    - `drink_name`: The rules and the orders are matched by this parameter.
+    - `ingredients`: (optional) Ingredients of the drink is described.
+    - `end_time`: (optional) The expire date of the drink.
+  - Request Headers:
+    - `cpee-callback`: The callback URL to which engine the notifications should be sent.
+  - Response Status:
+    - `Status: 200`: Rule recieved & processed successfuly.
+    - `Status: 500`: Error in processing the rule.
+  - Response Headers:
+    - `CPEE-CALLBACK: true`: The rule has no matching order yet. Wait in standby.
+    - `CPEE-CALLBACK: false`: An order & rule match has been found.
 
-
-
-
-
-
-## Bonuses
+- `POST` **/engine/orderRecieved**
+  - Parameters:
+    - `drink_name`: The orders and the rules are matched by this parameter.
+    - `customer_name`: The name of the message owner in Telegram.
+    - `order_time`: The order date.
+    - `update_info`: The callback info of the Telegram chat, if any notifications back wanted to be sent in the future.
+  - Response Status:
+    - `Status: 200`: Order recieved & processed successfuly.
+    - `Status: 500`: Error in processing the order.
+- `GET` **/rule**
+- `GET` **/rule:id>**
+- `POST` **/rule**
+- `DELETE` **/rule:id**
+- `GET` **/order**
+- `GET` **/order:id>**
+- `POST` **/order**
+- `DELETE` **/order:id**
+- `GET` **/matched**
+- `GET` **/matched:id>**
+- `POST` **/matched**
+- `DELETE` **/matched:id**
+  
+## Bonus
 - Postman config file: https://github.com/abcdrk/inter-message-correlation/blob/main/Cocktailbot.postman_collection.json
 - There's also a React Web Application provided (https://github.com/abcdrk/inter-message-correlation/tree/main/client) for better visualization of rules queue, orders queue and the matched orders queue.
 
