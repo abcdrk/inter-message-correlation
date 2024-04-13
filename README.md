@@ -62,7 +62,7 @@ Contains the very important 2 endpoints of the project: **applyRule** & **orderR
 - **orderRecieved:** Recives the order entered from the Telegram bot, checks whether any mantching rule is currently available. Matching is done by comparing the `drink_name`. If not, it stores the recieved order into the orders queue. If a matching rule is available already, it pops (deletes) the order from the order queue, creates a new matched order object & store it into the database, and notifies the cpee engine which is waiting for the async call by using the cpee_callback url.
 #### `server/routes/bot.js`: 
 Contains the necessary methods to have a functional Telegram Bot which fetches the desired `drink_name` added after a `/order` message. For example: `/order Vodka` will store `Vodka` as the `drink_name`. The bot uses the `/engine/orderRecieved` endpoint of the server.
-#### CPEE Engine Structure
+#### `CPEE Engine Structure`
 Example engine: https://cpee.org/flow/?monitor=https://cpee.org/flow/engine/36973/
 <img width="1512" alt="cpee-ss" src="https://github.com/abcdrk/inter-message-correlation/assets/19238061/df947a0d-8e04-4f66-b056-80a97d1ab7be">
 
