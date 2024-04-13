@@ -20,7 +20,7 @@ Bonus:
  
 ## Prerequisites
 - Node (18.17.1) (Current version in Lehre server)
-- MongoDB Atlas Account (Make sure your IP address is whitelisted in your settings.)
+- MongoDB Atlas Account **(!!!!Make sure your IP address is whitelisted in your settings!!!!!)**
 - Express.js
 - dotenv
 - Telegraf (^4.16.3)
