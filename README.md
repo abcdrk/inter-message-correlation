@@ -16,7 +16,7 @@ Bonus:
 - **Client:** A React.js application just to simplify database visualization.
   - Create/Delete/List Rules,
   - Create/Delete/List Orders,
-  - Create/Delete/List Matched Orders.
+  - List Matched Orders.
  
 ## Prerequisites
 - Node (18.17.1) (Current version in Lehre server)
@@ -38,20 +38,20 @@ TELEGRAM_TOKEN=<telegram_token>
 ```
 5. Start server:
 ```
-cd mern/server
+cd server
 npm install
 npm start
 ```
 6. Start Telegram Bot
 ```
-cd mern/server
+cd server
 npm install
 node bot.js
 ```
 
 7. Start Web server
 ```
-cd mern/client
+cd client
 npm install
 npm run dev
 ```
